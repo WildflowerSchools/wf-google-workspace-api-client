@@ -1,12 +1,14 @@
 import json
 import logging
 from typing import Union
+from uuid import UUID
 
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
 from .. import const
 from ..models.user import GWorkspaceUser
+from ..models.watch import GWorkspaceWatch, CreateWatch, DeleteWatch
 
 logger = logging.getLogger(__name__)
 
@@ -99,7 +101,20 @@ class Api:
         response = self.request(method="POST", path=path, params=params, data=data)
         return response.json()
 
+    def delete(self, path, params: dict = None, data: dict = None):
+        response = self.request(method="DELETE", path=path, params=params, data=data)
+        return response.json()
+
     def get_user_by_email(self, email) -> GWorkspaceUser:
         r = self.get(f"users/{email}")
         user = GWorkspaceUser.parse_obj(r)
         return user
+
+    def create_user_watch(self, uuid: UUID, url: str, token: str, ttl: int) -> GWorkspaceWatch:
+        r = self.post("users/watch", data=CreateWatch(uuid=uuid, url=url, token=token, ttl=ttl).dict())
+        watch = GWorkspaceWatch.parse_obj(r)
+        return watch
+
+    def delete_watch(self, uuid: UUID, resource_id: str):
+        r = self.delete("/", data=DeleteWatch(uuid=uuid, resource_id=resource_id))
+        return r
