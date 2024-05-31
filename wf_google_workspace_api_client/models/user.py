@@ -5,17 +5,17 @@ from pydantic import BaseModel
 
 
 class GWorkspaceUserWildflowerSchema(BaseModel):
-    School_Founder: Optional[bool]
-    Teacher_Leader: Optional[bool]
-    Emerging_Teacher_Leader: Optional[bool]
-    Classroom_Staff: Optional[bool]
-    Fellow: Optional[bool]
-    Partner: Optional[bool]
-    Contractor: Optional[bool]
+    School_Founder: Optional[bool] = None
+    Teacher_Leader: Optional[bool] = None
+    Emerging_Teacher_Leader: Optional[bool] = None
+    Classroom_Staff: Optional[bool] = None
+    Fellow: Optional[bool] = None
+    Partner: Optional[bool] = None
+    Contractor: Optional[bool] = None
 
 
 class GWorkspaceUserCustomSchema(BaseModel):
-    Wildflower_Profile: Optional[GWorkspaceUserWildflowerSchema]
+    Wildflower_Profile: Optional[GWorkspaceUserWildflowerSchema] = None
 
 
 class GWorkspaceUserLanguages(BaseModel):
@@ -25,7 +25,7 @@ class GWorkspaceUserLanguages(BaseModel):
 
 class GWorkspaceUserEmails(BaseModel):
     address: str
-    primary: Optional[bool]
+    primary: Optional[bool] = None
 
 
 class GWorkspaceUserName(BaseModel):
@@ -55,7 +55,7 @@ class GWorkspaceUser(BaseModel):
     isEnforcedIn2Sv: bool
     includeInGlobalAddressList: bool
     name: GWorkspaceUserName
-    customSchemas: Optional[GWorkspaceUserCustomSchema]
+    customSchemas: Optional[GWorkspaceUserCustomSchema] = None
     emails: list[GWorkspaceUserEmails]
     languages: list[GWorkspaceUserLanguages]
 
